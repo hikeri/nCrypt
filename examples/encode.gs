@@ -448,7 +448,7 @@ nCryptLibrary.secureHash = function(text)
 	hour = dateTime[1].split(":")[0]
 	minute = dateTime[1].split(":")[1]
 
-	nonce = R1_MD5(dateTime[0] + hour + str(floor(minute/(floor(self.iterations/5)+1))))
+	nonce = nCryptLibrary.SHA256(dateTime[0] + hour + str(floor(minute/(floor(self.iterations/5)+1))))
 
 	hmacString = self.HMac(text, nonce)
 	hashString = self.Hash(hmacString)
@@ -462,7 +462,7 @@ nCryptLibrary.secureCompare = function(text, hashInput)
 	hour = dateTime[1].split(":")[0]
 	minute = dateTime[1].split(":")[1]
 
-	nonce = R1_MD5(dateTime[0] + hour + str(floor(minute/(floor(self.iterations/5)+1))))
+	nonce = nCryptLibrary.SHA256(dateTime[0] + hour + str(floor(minute/(floor(self.iterations/5)+1))))
 
 	hmacString = self.HMac(text, nonce)
 
