@@ -470,3 +470,40 @@ nCryptLibrary.secureCompare = function(text, hashInput)
 end function
 
 return nCryptLibrary
+
+//////////////////////////////////////
+
+nCrypt = new nCryptLibrary
+
+nCrypt.iterations = 3
+nCrypt.secret = "abc123" //-- set this to a random string (MUST BE THE SAME ON encode.src AND decode.bin)
+
+Encode = function(text)
+  text = text.replace("\n","").replace(char(10),"").trim
+
+  password = nCrypt.secureHash(text)
+
+  password = password.replace("\n","").replace(char(10),"").trim
+
+  return password
+end function
+
+Decode = function(input) //-- remove this section for encode.src or they will know ur pass
+  pass = "test123" //-- set this to your root password
+  if nCrypt.secureCompare(pass,input) then return pass
+  return "no"
+end function
+
+// testing
+
+date = current_date
+
+while date == current_date
+  wait(.1)
+end while
+
+xHash = Encode("test123")
+print(xHash)
+
+xResult = Decode(xHash)
+print(xResult)
